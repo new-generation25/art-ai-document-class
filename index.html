@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,27 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            950: '#020617', // Deep customized dark
+                        },
+                        violet: {
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -18,10 +39,21 @@
 
     <style>
         body {
-            font-family: 'Noto Sans KR', sans-serif;
-            background-color: #fdfdfc;
-            color: #1c1917;
-            scroll-behavior: smooth;
+            font-family: 'Noto Sans KR', 'sans-serif';
+            background-color: #020617;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Abstract Background Glow */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(2, 6, 23, 0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
         }
 
         .chart-container {
@@ -32,27 +64,28 @@
             margin: 0 auto;
         }
 
+        /* Custom Scrollbar for Dark Mode */
         .custom-scroll::-webkit-scrollbar {
-            width: 4px;
+            width: 6px;
         }
 
         .custom-scroll::-webkit-scrollbar-track {
-            background: #f5f5f4;
+            background: #0f172a;
         }
 
         .custom-scroll::-webkit-scrollbar-thumb {
-            background-color: #d6d3d1;
+            background-color: #334155;
             border-radius: 10px;
         }
 
         .fade-in {
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(20px);
             }
 
             to {
@@ -61,16 +94,32 @@
             }
         }
 
+        /* Glassmorphism Utilities */
+        .glass {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.4) 0%, rgba(15, 23, 42, 0.6) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
         .active-tab {
-            background-color: white;
-            color: #ea580c;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            border: 1px solid #f2f2f2;
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
         }
 
         .typing-cursor::after {
             content: '|';
             animation: blink 1s step-start infinite;
+            color: #a78bfa;
         }
 
         @keyframes blink {
@@ -91,70 +140,104 @@
     </style>
 </head>
 
-<body class="antialiased">
+<body class="antialiased selection:bg-violet-500 selection:text-white">
+
+    <!-- Shared Background for Hero & Features -->
+    <div class="absolute top-0 w-full h-[1100px] pointer-events-none z-0 overflow-hidden">
+        <div
+            class="absolute top-[-10%] left-[50%] translate-x-[-50%] w-[150%] max-w-[1800px] h-full opacity-60 mix-blend-screen">
+            <!-- Updated Hero Visual to cover more area -->
+            <img src="images/hero-visual.png" alt="Neural Renaissance Abstract"
+                class="w-full h-full object-cover blur-[50px] sm:blur-0 animate-[pulse_10s_ease-in-out_infinite] scale-125">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#020617]/10 to-[#020617]"></div>
+        </div>
+    </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
+    <nav class="fixed top-0 w-full z-50 glass border-b-0">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
             <div class="flex items-center gap-2">
-                <span class="text-2xl">🎨</span>
-                <span class="font-bold text-xl tracking-tighter">Artist <span class="text-orange-600">x</span> AI</span>
+                <span class="text-2xl filter drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]">🎨</span>
+                <span class="font-bold text-xl tracking-tighter text-slate-100">Artist <span
+                        class="text-violet-500 drop-shadow-[0_0_10px_rgba(124,58,237,0.8)]">x</span> AI</span>
             </div>
-            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-stone-600">
-                <a href="#curriculum" class="hover:text-orange-600 transition">커리큘럼</a>
-                <a href="#translator" class="hover:text-orange-600 transition">AI 번역 체험</a>
-                <a href="#analytics" class="hover:text-orange-600 transition">심사 전략</a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-400">
+                <a href="#curriculum" class="hover:text-violet-400 transition duration-300">커리큘럼</a>
+                <a href="#translator" class="hover:text-violet-400 transition duration-300">AI 번역 체험</a>
+                <a href="#analytics" class="hover:text-violet-400 transition duration-300">심사 전략</a>
                 <button onclick="openModal()"
-                    class="px-5 py-2 bg-stone-900 text-white rounded-full hover:bg-orange-600 transition">신청하기</button>
+                    class="px-6 py-2 bg-violet-600 hover:bg-violet-500 text-white rounded-full transition shadow-[0_0_15px_rgba(124,58,237,0.4)] hover:shadow-[0_0_25px_rgba(124,58,237,0.6)]">신청하기</button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative pt-32 pb-24 overflow-hidden">
+    <header class="relative pt-40 pb-32 overflow-hidden">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
             <span
-                class="inline-block px-4 py-1.5 mb-6 text-[10px] font-bold tracking-widest text-orange-600 bg-orange-50 rounded-full border border-orange-100 uppercase">예술인을
-                위한 AI 마스터 클래스</span>
-            <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold text-stone-900 mb-8 leading-tight">
+                class="inline-block px-4 py-1.5 mb-8 text-[11px] font-bold tracking-[0.2em] text-cyan-400 bg-cyan-950/30 rounded-full border border-cyan-800/50 uppercase shadow-[0_0_10px_rgba(34,211,238,0.2)]">
+                예술인을 위한 AI 마스터 클래스
+            </span>
+            <h1
+                class="text-5xl sm:text-6xl md:text-8xl font-bold text-white mb-10 leading-tight tracking-tight drop-shadow-2xl">
                 추상적인 영감을<br>
-                <span class="text-orange-600">필승의 제안서</span>로 바꾸다
+                <span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 drop-shadow-[0_0_20px_rgba(168,85,247,0.3)]">필승의
+                    제안서</span>로
             </h1>
-            <p class="text-lg md:text-xl text-stone-600 mb-12 leading-relaxed max-w-2xl mx-auto">
+            <p
+                class="text-lg md:text-xl text-slate-300 mb-14 leading-relaxed max-w-2xl mx-auto font-light drop-shadow-md">
                 제미나이 3.0 Pro와 함께하는 4주간의 특별한 여정.<br>
-                이제 행정 서류의 공포에서 벗어나 창작에만 집중하세요.
+                <span class="text-white font-medium">이제 행정 서류의 공포에서 벗어나 창작에만 집중하세요.</span>
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <div class="flex flex-col sm:flex-row justify-center gap-5">
                 <a href="#curriculum"
-                    class="px-10 py-4 bg-stone-900 text-white font-bold rounded-2xl hover:bg-stone-800 transition shadow-lg">커리큘럼
-                    보기</a>
+                    class="px-10 py-4 glass text-slate-300 font-bold rounded-2xl hover:bg-slate-800 hover:text-white transition border border-slate-700 backdrop-blur-md">
+                    커리큘럼 보기
+                </a>
                 <button onclick="openModal()"
-                    class="px-10 py-4 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition shadow-lg">🚀
-                    워크숍 신청하기</button>
+                    class="px-10 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold rounded-2xl hover:scale-105 transition shadow-[0_0_30px_rgba(124,58,237,0.5)] border border-violet-500/50">
+                    🚀 워크숍 신청하기
+                </button>
             </div>
+        </div>
+
+        <!-- Decoration Grid -->
+        <div
+            class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTTAgNDBMMCAwTDQwIDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjAzKSIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIiAvPjwvc3ZnPg==')] pointer-events-none z-0">
         </div>
     </header>
 
     <!-- Why Gemini -->
-    <section class="py-24 bg-stone-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <section class="py-24 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="p-8 bg-white rounded-3xl border border-stone-100 shadow-sm">
-                    <div class="text-3xl mb-4">🧠</div>
-                    <h3 class="text-lg font-bold mb-3">압도적 맥락 파악</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed">200만 토큰의 긴 문맥 이해력으로 복잡한 공고문과 작가님의 포트폴리오를 한 번에
+                <div class="glass-card p-8 rounded-3xl hover:border-violet-500/30 transition duration-500 group">
+                    <div
+                        class="text-4xl mb-6 bg-slate-800 w-16 h-16 flex items-center justify-center rounded-2xl group-hover:scale-110 transition">
+                        🧠</div>
+                    <h3 class="text-xl font-bold mb-4 text-slate-100 group-hover:text-violet-300 transition">압도적 맥락 파악
+                    </h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">200만 토큰의 긴 문맥 이해력으로 복잡한 공고문과 작가님의 포트폴리오를 한 번에
                         분석합니다.</p>
                 </div>
-                <div class="p-8 bg-white rounded-3xl border border-stone-100 shadow-sm">
-                    <div class="text-3xl mb-4">🌐</div>
-                    <h3 class="text-lg font-bold mb-3">실시간 정보 검색</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed">최신 문화예술 트렌드와 지역 정책 데이터를 실시간으로 찾아 기획서의 논리적 근거를
+                <div class="glass-card p-8 rounded-3xl hover:border-cyan-500/30 transition duration-500 group">
+                    <div
+                        class="text-4xl mb-6 bg-slate-800 w-16 h-16 flex items-center justify-center rounded-2xl group-hover:scale-110 transition">
+                        🌐</div>
+                    <h3 class="text-xl font-bold mb-4 text-slate-100 group-hover:text-cyan-300 transition">실시간 정보 검색
+                    </h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">최신 문화예술 트렌드와 지역 정책 데이터를 실시간으로 찾아 기획서의 논리적 근거를
                         강화합니다.</p>
                 </div>
-                <div class="p-8 bg-white rounded-3xl border border-stone-100 shadow-sm">
-                    <div class="text-3xl mb-4">🎭</div>
-                    <h3 class="text-lg font-bold mb-3">예술가형 행정 언어</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed">단순한 수정을 넘어 예술적 고유성을 유지하면서 설득력 있는 행정 용어로 완벽하게
+                <!-- 3rd Component: Artist x Admin Language -->
+                <div class="glass-card p-8 rounded-3xl hover:border-fuchsia-500/30 transition duration-500 group">
+                    <div
+                        class="text-4xl mb-6 bg-slate-800 w-16 h-16 flex items-center justify-center rounded-2xl group-hover:scale-110 transition">
+                        🎭</div>
+                    <h3 class="text-xl font-bold mb-4 text-slate-100 group-hover:text-fuchsia-300 transition">예술가형 행정 언어
+                    </h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">단순한 수정을 넘어 예술적 고유성을 유지하면서 설득력 있는 행정 용어로 완벽하게
                         번역합니다.</p>
                 </div>
             </div>
@@ -162,60 +245,77 @@
     </section>
 
     <!-- Curriculum Section -->
-    <section id="curriculum" class="py-24 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="curriculum" class="py-24 relative overflow-hidden">
+        <div class="bg-glow top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] opacity-30"></div>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-stone-900 mb-4">4주 집중 커리큘럼</h2>
-                <p class="text-stone-500">기초 이해부터 최종 심사 준비까지, 체계적인 단계별 학습을 제공합니다.</p>
-                <p class="text-orange-600 font-bold text-sm mt-2">👥 소수 인원 6명 모집</p>
+                <span class="text-violet-500 font-bold tracking-widest text-xs uppercase mb-2 block">Process</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">4주 집중 커리큘럼</h2>
+                <p class="text-slate-400">기초 이해부터 최종 심사 준비까지, 체계적인 단계별 학습을 제공합니다.</p>
+                <p
+                    class="text-cyan-400 font-bold text-sm mt-4 bg-cyan-950/30 inline-block px-4 py-1 rounded-full border border-cyan-500/20">
+                    👥 소수 인원 6명 모집</p>
             </div>
 
             <!-- Tab Navigation -->
-            <div class="flex justify-center mb-8">
+            <div class="flex justify-center mb-10">
                 <div
-                    class="inline-block px-5 py-2 bg-orange-50 text-orange-700 rounded-full font-bold text-sm border border-orange-100 shadow-sm">
+                    class="inline-block px-6 py-2 bg-slate-900/80 text-violet-300 rounded-full font-bold text-sm border border-violet-500/20 shadow-lg backdrop-blur-sm">
                     🗓️ 2026. 1. 6. ~ 1. 27. (매주 화) &nbsp;|&nbsp; ⏰ 10:00 ~ 12:00
                 </div>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-2 mb-12 p-2 bg-stone-100 rounded-3xl max-w-3xl mx-auto">
+            <div
+                class="flex flex-wrap justify-center gap-3 mb-14 p-2 bg-slate-900/50 rounded-3xl max-w-3xl mx-auto border border-white/5">
                 <button onclick="changeWeek(1)" id="tab-1"
-                    class="week-tab active-tab px-6 py-3 rounded-2xl text-base font-bold transition text-center leading-tight">1주차
-                    (1/6)<br><span class="text-sm font-normal text-stone-400">오리엔테이션</span></button>
+                    class="week-tab active-tab px-6 py-4 rounded-2xl text-base font-bold transition text-center leading-tight text-slate-400 hover:text-white">1주차
+                    <span class="block text-xs font-normal opacity-60 mt-1">오리엔테이션</span></button>
                 <button onclick="changeWeek(2)" id="tab-2"
-                    class="week-tab px-6 py-3 rounded-2xl text-base font-bold transition text-center leading-tight">2주차
-                    (1/13)<br><span class="text-sm font-normal text-stone-400">논리 구조</span></button>
+                    class="week-tab px-6 py-4 rounded-2xl text-base font-bold transition text-center leading-tight text-slate-400 hover:text-white">2주차
+                    <span class="block text-xs font-normal opacity-60 mt-1">논리 구조</span></button>
                 <button onclick="changeWeek(3)" id="tab-3"
-                    class="week-tab px-6 py-3 rounded-2xl text-base font-bold transition text-center leading-tight">3주차
-                    (1/20)<br><span class="text-sm font-normal text-stone-400">상세 기획</span></button>
+                    class="week-tab px-6 py-4 rounded-2xl text-base font-bold transition text-center leading-tight text-slate-400 hover:text-white">3주차
+                    <span class="block text-xs font-normal opacity-60 mt-1">상세 기획</span></button>
                 <button onclick="changeWeek(4)" id="tab-4"
-                    class="week-tab px-6 py-3 rounded-2xl text-base font-bold transition text-center leading-tight">4주차
-                    (1/27)<br><span class="text-sm font-normal text-stone-400">최종 점검</span></button>
+                    class="week-tab px-6 py-4 rounded-2xl text-base font-bold transition text-center leading-tight text-slate-400 hover:text-white">4주차
+                    <span class="block text-xs font-normal opacity-60 mt-1">최종 점검</span></button>
             </div>
 
             <!-- Content Area -->
-            <div id="curriculum-content" class="fade-in">
-                <!-- JavaScript will inject content here -->
+            <div id="curriculum-content" class="fade-in min-h-[400px]">
+                <!-- JavaScript handles this -->
             </div>
         </div>
     </section>
 
     <!-- Interactive Translator -->
-    <section id="translator" class="py-24 bg-stone-900 text-white">
-        <div class="max-w-5xl mx-auto px-6">
+    <section id="translator"
+        class="py-24 bg-slate-900 border-y border-white/5 sm:rounded-[3rem] sm:mx-4 relative overflow-hidden shadow-2xl">
+        <!-- Decoration -->
+        <div class="absolute inset-0 z-0 opacity-40">
+            <img src="images/cta-bg.png" class="w-full h-full object-cover opacity-60 mix-blend-screen">
+        </div>
+        <div
+            class="absolute top-0 right-0 w-full h-full bg-[linear-gradient(45deg,transparent_45%,rgba(124,58,237,0.05)_50%,transparent_55%)] bg-[length:20px_20px] z-0">
+        </div>
+
+        <div class="max-w-5xl mx-auto px-6 relative z-10">
             <div class="text-center mb-16">
-                <span class="text-orange-500 font-bold tracking-widest text-xs uppercase">Interactive Demo</span>
-                <h2 class="text-4xl font-bold mt-4 mb-6">AI 예술가 언어 번역기</h2>
-                <p class="text-stone-400">내 생각을 행정 서류에 적합한 언어로 바꾸는 과정을 미리 체험해 보세요.</p>
+                <span
+                    class="text-fuchsia-500 font-bold tracking-widest text-xs uppercase shadow-[0_0_15px_rgba(217,70,239,0.3)]">Interactive
+                    Demo</span>
+                <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6 text-white drop-shadow-lg">AI 예술가 언어 번역기</h2>
+                <p class="text-slate-300 font-medium">내 생각을 행정 서류에 적합한 언어로 바꾸는 과정을 미리 체험해 보세요.</p>
             </div>
 
-            <div class="bg-stone-800 rounded-3xl p-8 border border-stone-700 shadow-2xl">
+            <div
+                class="glass-card rounded-[2.5rem] p-8 md:p-12 border border-white/10 shadow-2xl backdrop-blur-xl bg-slate-900/40">
                 <div class="grid md:grid-cols-[1fr,auto,1fr] gap-8 items-center">
                     <div class="space-y-4">
-                        <label class="text-xs font-bold text-stone-500 uppercase tracking-widest">Artist Mind (나의
+                        <label class="text-xs font-bold text-slate-500 uppercase tracking-widest">Artist Mind (나의
                             아이디어)</label>
                         <select id="artist-select"
-                            class="w-full bg-stone-900 border border-stone-700 rounded-2xl px-5 py-4 text-stone-200 focus:outline-none focus:border-orange-500 appearance-none cursor-pointer">
+                            class="w-full bg-slate-950/80 border border-slate-700 rounded-2xl px-5 py-5 text-slate-200 focus:outline-none focus:border-violet-500 appearance-none cursor-pointer hover:bg-slate-900 transition shadow-inner">
                             <option value="0">"할머니의 옛날 이야기를 그림으로 남기고 싶어요."</option>
                             <option value="1">"요즘 사람들이 예술을 너무 몰라요."</option>
                             <option value="2">"동네 오래된 시장이 사라지는 게 슬퍼요."</option>
@@ -224,19 +324,22 @@
                         </select>
                     </div>
 
-                    <div class="flex justify-center">
+                    <div class="flex justify-center transform rotate-90 md:rotate-0">
                         <button onclick="runTranslation()"
-                            class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center hover:bg-orange-500 transition shadow-lg group">
-                            <span class="text-2xl group-hover:scale-125 transition">⚡</span>
+                            class="w-16 h-16 bg-gradient-to-br from-violet-600 to-fuchsia-600 rounded-full flex items-center justify-center hover:scale-110 transition shadow-[0_0_30px_rgba(139,92,246,0.4)] group border border-white/20">
+                            <span class="text-2xl group-hover:rotate-12 transition text-white">⚡</span>
                         </button>
                     </div>
 
                     <div class="space-y-4">
-                        <label class="text-xs font-bold text-orange-500 uppercase tracking-widest">Admin Logic (공모전
+                        <label class="text-xs font-bold text-fuchsia-500 uppercase tracking-widest">Admin Logic (공모전
                             언어)</label>
                         <div
-                            class="bg-stone-900/50 border border-stone-700 rounded-2xl px-5 py-4 min-h-[120px] flex items-center">
-                            <p id="translation-result" class="text-stone-300 font-medium leading-relaxed">예시를 선택하고 번역
+                            class="bg-slate-950/80 border border-violet-500/20 rounded-2xl px-6 py-6 min-h-[140px] flex items-center shadow-inner relative overflow-hidden">
+                            <div
+                                class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-violet-500 to-fuchsia-500">
+                            </div>
+                            <p id="translation-result" class="text-slate-300 font-medium leading-relaxed">예시를 선택하고 번개
                                 버튼을 눌러보세요.</p>
                         </div>
                     </div>
@@ -246,38 +349,46 @@
     </section>
 
     <!-- Strategy Section -->
-    <section id="analytics" class="py-24 bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <section id="analytics" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
                 <div
-                    class="bg-stone-50 p-6 sm:p-10 rounded-[2.5rem] border border-stone-100 mx-auto w-full max-w-md md:max-w-none">
-                    <h3 class="text-xl font-bold text-stone-800 mb-8 text-center">공모사업 심사 배점표 분석</h3>
+                    class="bg-slate-900/60 p-8 sm:p-12 rounded-[2.5rem] border border-slate-800 mx-auto w-full max-w-md md:max-w-none backdrop-blur-sm shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
+                    <h3
+                        class="text-xl font-bold text-slate-200 mb-8 text-center flex items-center justify-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span> 공모사업 심사 배점표 분석
+                    </h3>
                     <div class="chart-container">
                         <canvas id="workshopChart"></canvas>
                     </div>
-                    <p class="text-[10px] text-stone-400 mt-8 text-center">
+                    <p class="text-[10px] text-slate-500 mt-8 text-center">
                         <br>
                         * 주요 재단 및 진흥원의 평균적인 심사 기준을 바탕으로 구성되었습니다.
                     </p>
                 </div>
                 <div class="space-y-8 text-center md:text-left">
                     <div>
-                        <span class="text-orange-600 font-bold text-sm uppercase">Selection Strategy</span>
-                        <h2 class="text-3xl md:text-4xl font-bold text-stone-900 mt-2 mb-6">심사위원의 <br>마음을 여는 전략</h2>
-                        <p class="text-stone-600 leading-relaxed">
-                            우수한 예술성(30%)도 중요하지만, 합격의 당락은 <strong>실현가능성(30%)</strong>과 <strong>사업수행역량(20%)</strong>에서
-                            결정됩니다.
-                            워크숍에서는 AI를 활용해 이 50%의 점수를 완벽하게 확보하는 법을 배웁니다.
+                        <span class="text-cyan-500 font-bold text-sm uppercase tracking-widest">Selection
+                            Strategy</span>
+                        <h2 class="text-4xl md:text-5xl font-bold text-white mt-3 mb-6 leading-tight">심사위원의 <br><span
+                                class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">마음을 여는
+                                전략</span></h2>
+                        <p class="text-slate-400 leading-relaxed text-lg">
+                            우수한 예술성(30%)도 중요하지만, 합격의 당락은 <strong class="text-violet-400">실현가능성(30%)</strong>과 <strong
+                                class="text-violet-400">사업수행역량(20%)</strong>에서 결정됩니다.
+                            워크숍에서는 AI를 활용해 이 50%를 완벽하게 확보합니다.
                         </p>
                     </div>
                     <div class="grid grid-cols-1 gap-4">
-                        <div class="flex items-center gap-4 p-4 bg-orange-50 rounded-2xl border border-orange-100">
-                            <span class="text-2xl">📈</span>
-                            <span class="text-sm font-medium text-stone-800">데이터 기반의 구체적인 사업 필요성 도출</span>
+                        <div
+                            class="flex items-center gap-5 p-5 bg-slate-800/50 rounded-2xl border border-slate-700 hover:bg-slate-800 transition">
+                            <span class="text-3xl bg-slate-950 rounded-full p-2">📈</span>
+                            <span class="text-base font-medium text-slate-200">데이터 기반의 구체적인 사업 필요성 도출</span>
                         </div>
-                        <div class="flex items-center gap-4 p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
-                            <span class="text-2xl">📅</span>
-                            <span class="text-sm font-medium text-stone-800">현실적인 주 단위 스케줄 및 리스크 관리</span>
+                        <div
+                            class="flex items-center gap-5 p-5 bg-slate-800/50 rounded-2xl border border-slate-700 hover:bg-slate-800 transition">
+                            <span class="text-3xl bg-slate-950 rounded-full p-2">📅</span>
+                            <span class="text-base font-medium text-slate-200">현실적인 주 단위 스케줄 및 리스크 관리</span>
                         </div>
                     </div>
                 </div>
@@ -286,113 +397,126 @@
     </section>
 
     <!-- Footer Area CTA -->
-    <section class="py-20 bg-stone-100 text-center">
-        <h2 class="text-3xl font-bold mb-6">선정 확률을 높일 준비가 되셨나요?</h2>
-        <button onclick="openModal()"
-            class="px-12 py-5 bg-stone-900 text-white font-bold rounded-2xl hover:bg-orange-600 transition shadow-xl text-lg mb-6">지금
-            바로 워크숍 신청하기</button>
-        <div class="text-sm text-stone-500 space-y-1">
-            <p>⏳ 신청접수 마감: <span class="text-orange-600 font-bold">2025. 12. 4.(일) 까지</span></p>
-            <p>* 참여자 확정 발표는 선정된 분들께 개별 안내 드립니다.</p>
+    <section class="py-24 text-center relative overflow-hidden">
+        <div class="bg-glow bottom-0 left-[50%] translate-x-[-50%] w-[800px] h-[400px] opacity-20"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-white">선정 확률을 높일 준비가 되셨나요?</h2>
+            <button onclick="openModal()"
+                class="px-12 py-6 bg-white text-slate-950 font-bold rounded-2xl hover:bg-violet-50 transition shadow-[0_0_40px_rgba(255,255,255,0.3)] text-xl mb-8 transform hover:-translate-y-1">
+                지금 바로 워크숍 신청하기
+            </button>
+            <div class="text-sm text-slate-500 space-y-2">
+                <p>⏳ 신청접수 마감: <span class="text-violet-400 font-bold">2025. 12. 4.(일) 까지</span></p>
+                <p class="opacity-70">* 참여자 확정 발표는 선정된 분들께 개별 안내 드립니다.</p>
+            </div>
         </div>
     </section>
 
     <!-- Modal Form -->
-    <div id="apply-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="apply-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
         <div
-            class="bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col fade-in">
-            <div class="bg-stone-900 p-4 sm:p-6 flex justify-between items-center text-white shrink-0">
-                <h2 class="text-base sm:text-xl font-bold leading-tight">공모사업 선정 확률을 높이는<br class="sm:hidden"> AI활용 워크숍
-                    신청서</h2>
+            class="bg-[#0f172a] w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col fade-in border border-slate-800">
+            <div
+                class="bg-slate-950 p-6 flex justify-between items-center text-white shrink-0 border-b border-slate-800">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">📝</span>
+                    <h2 class="text-lg sm:text-xl font-bold leading-tight">AI 활용 워크숍 신청서</h2>
+                </div>
                 <button onclick="closeModal()"
-                    class="text-3xl leading-none hover:text-orange-500 transition ml-2">&times;</button>
+                    class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-slate-800 transition text-slate-400 hover:text-white text-xl">&times;</button>
             </div>
 
-            <div class="p-4 sm:p-8 overflow-y-auto custom-scroll">
-                <p class="text-stone-500 mb-4 font-medium">"당신의 예술 철학, 이제 공모전의 언어로 꽃피우세요."</p>
-                <p class="text-orange-600 text-sm font-bold">* 모든 항목에 응답해 주세요.</p>
-                <p class="text-stone-600 text-sm mb-8">* 전 회차 참석을 원칙으로 합니다.</p>
+            <div class="p-6 sm:p-8 overflow-y-auto custom-scroll">
+                <p class="text-slate-400 mb-2 font-medium">"당신의 예술 철학, 전설적인 제안서가 됩니다."</p>
+                <div class="space-y-1 mb-8">
+                    <p class="text-violet-400 text-sm font-bold">* 모든 항목 필수</p>
+                    <p class="text-slate-600 text-xs">* 4주 전 회차 참석 필수</p>
+                </div>
 
                 <form id="workshop-form" class="space-y-10" onsubmit="handleFormSubmit(event)">
                     <!-- 1. 기본 정보 -->
                     <div class="space-y-6">
-                        <h3 class="font-bold text-stone-800 border-l-4 border-orange-500 pl-3">1. 기본 정보</h3>
+                        <h3 class="font-bold text-slate-200 border-l-4 border-violet-500 pl-3">1. 기본 정보</h3>
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-stone-400 uppercase">성함</label>
+                                <label class="text-xs font-bold text-slate-500 uppercase">성함</label>
                                 <input type="text" name="name" required
-                                    class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600"
                                     placeholder="홍길동">
                             </div>
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-stone-400 uppercase">연락처</label>
+                                <label class="text-xs font-bold text-slate-500 uppercase">연락처</label>
                                 <input type="tel" name="phone" required
-                                    class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600"
                                     placeholder="010-0000-0000">
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-bold text-stone-400 uppercase">이메일 (구글계정)</label>
+                            <label class="text-xs font-bold text-slate-500 uppercase">이메일 (구글계정)</label>
                             <input type="email" name="email" required
-                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600"
                                 placeholder="example@gmail.com">
                         </div>
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-stone-400 uppercase">주요 활동 지역</label>
+                                <label class="text-xs font-bold text-slate-500 uppercase">활동 지역</label>
                                 <input type="text" name="region" required
-                                    class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
-                                    placeholder="예: 김해시, 경남 전역 등">
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600"
+                                    placeholder="예: 서울 마포구">
                             </div>
                             <div class="space-y-2">
-                                <label class="text-xs font-bold text-stone-400 uppercase">주요 활동 예술 분야</label>
+                                <label class="text-xs font-bold text-slate-500 uppercase">예술 분야</label>
                                 <input type="text" name="field" required
-                                    class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
-                                    placeholder="예: 연극, 서양화 등">
+                                    class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600"
+                                    placeholder="예: 시각예술, 연극">
                             </div>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-bold text-stone-400 uppercase">세부 예술활동</label>
+                            <label class="text-xs font-bold text-slate-500 uppercase">세부 예술활동</label>
                             <textarea name="detail_activity" required
-                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24"
-                                placeholder="진행 중이신 주요 활동이나 최근 프로젝트를 간단히 적어주세요."></textarea>
+                                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600 h-24 custom-scroll"
+                                placeholder="최근 프로젝트나 활동 내용을 간단히 적어주세요."></textarea>
                         </div>
                     </div>
 
                     <!-- 2. AI 활용 경험 -->
                     <div class="space-y-6">
-                        <h3 class="font-bold text-stone-800 border-l-4 border-orange-500 pl-3">2. AI 활용 경험</h3>
+                        <h3 class="font-bold text-slate-200 border-l-4 border-violet-500 pl-3">2. AI 활용 경험</h3>
                         <div class="space-y-4">
-                            <p class="text-sm font-medium text-stone-700">생성형 AI(ChatGPT, 제미나이 등)를 사용해 본 적이 있나요?</p>
+                            <p class="text-sm font-medium text-slate-400">생성형 AI 사용 경험</p>
                             <div class="flex flex-col gap-2">
                                 <label
-                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="radio" name="ai_exp" value="전혀 없다" required class="text-orange-600">
-                                    <span class="text-sm text-stone-600">전혀 없다</span>
+                                    class="flex items-center gap-3 p-3 border border-slate-800 rounded-xl hover:bg-slate-800/50 cursor-pointer bg-slate-900/30">
+                                    <input type="radio" name="ai_exp" value="전혀 없다" required
+                                        class="text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-sm text-slate-300">전혀 없다</span>
                                 </label>
                                 <label
-                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="radio" name="ai_exp" value="가끔 대화해 본 적은 있다" class="text-orange-600">
-                                    <span class="text-sm text-stone-600">가끔 대화해 본 적은 있다</span>
+                                    class="flex items-center gap-3 p-3 border border-slate-800 rounded-xl hover:bg-slate-800/50 cursor-pointer bg-slate-900/30">
+                                    <input type="radio" name="ai_exp" value="가끔 대화해 본 적은 있다"
+                                        class="text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-sm text-slate-300">가끔 사용해봤다</span>
                                 </label>
                                 <label
-                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    class="flex items-center gap-3 p-3 border border-slate-800 rounded-xl hover:bg-slate-800/50 cursor-pointer bg-slate-900/30">
                                     <input type="radio" name="ai_exp" value="실제 작업이나 업무에 활용하고 있다"
-                                        class="text-orange-600"> <span class="text-sm text-stone-600">실제 작업이나 업무에 활용하고
-                                        있다</span>
+                                        class="text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-sm text-slate-300">업무에 활용 중이다</span>
                                 </label>
                             </div>
                         </div>
                         <div class="space-y-4">
-                            <p class="text-sm font-medium text-stone-700">구글 계정을 가지고 있으며, 평소 원활하게 사용하시나요?</p>
+                            <p class="text-sm font-medium text-slate-400">구글 계정 사용 여부</p>
                             <div class="flex gap-6">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="google_use" value="예" required class="text-orange-600">
-                                    <span class="text-sm">예</span>
+                                    <input type="radio" name="google_use" value="예" required
+                                        class="text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-sm text-slate-300">예</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="google_use" value="아니오" class="text-orange-600"> <span
-                                        class="text-sm">아니오</span>
+                                    <input type="radio" name="google_use" value="아니오"
+                                        class="text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-sm text-slate-300">아니오</span>
                                 </label>
                             </div>
                         </div>
@@ -400,52 +524,51 @@
 
                     <!-- 3. 공모사업 도전 경험 -->
                     <div class="space-y-6">
-                        <h3 class="font-bold text-stone-800 border-l-4 border-orange-500 pl-3">3. 공모사업 도전 경험</h3>
+                        <h3 class="font-bold text-slate-200 border-l-4 border-violet-500 pl-3">3. 공모사업 도전 경험</h3>
                         <div class="space-y-2">
-                            <label class="text-sm font-medium text-stone-700">최근 2년 내 공모사업에 신청을 했거나 선정되어 운영한 경험이
-                                있나요?</label>
+                            <label class="text-sm font-medium text-slate-400">최근 2년 내 공모사업 경험</label>
                             <textarea name="grant_exp"
-                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24"
-                                placeholder="예: 2025년 지역문화예술육성지원사업 300만원 / 선정, 2024 김해시 예술 지원사업 200만원 비선정"></textarea>
+                                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600 h-24 custom-scroll"
+                                placeholder="선정/비선정 경험을 자유롭게 적어주세요."></textarea>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-sm font-medium text-stone-700">현재 지원을 염두에 두고 있는 특정 공모사업이 있나요?</label>
+                            <label class="text-sm font-medium text-slate-400">목표 공모사업</label>
                             <input type="text" name="target_grant"
-                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
-                                placeholder="사업명과 최대지원 예산을 작성해주세요.">
+                                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600"
+                                placeholder="사업명 등">
                         </div>
                         <div class="space-y-4">
-                            <p class="text-sm font-medium text-stone-700">공모사업 계획서 작성 시 가장 어렵게 느껴지는 부분은? (중복 선택)</p>
+                            <p class="text-sm font-medium text-slate-400">가장 어려운 점 (중복 선택)</p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <label
-                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="사업의 목적 및 필요성 논리 세우기"
-                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">사업의 목적 및
-                                        필요성 논리 세우기</span>
+                                    class="flex items-center gap-3 p-3 border border-slate-800 rounded-xl hover:bg-slate-800/50 cursor-pointer bg-slate-900/30">
+                                    <input type="checkbox" name="difficulty" value="사업 목적 논리"
+                                        class="rounded text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-xs text-slate-300">사업 목적 및 논리 개발</span>
                                 </label>
                                 <label
-                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="행정 용어로 문장 다듬기"
-                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">행정 용어로 문장
-                                        다듬기</span>
+                                    class="flex items-center gap-3 p-3 border border-slate-800 rounded-xl hover:bg-slate-800/50 cursor-pointer bg-slate-900/30">
+                                    <input type="checkbox" name="difficulty" value="행정 용어"
+                                        class="rounded text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-xs text-slate-300">행정 용어 작성</span>
                                 </label>
                                 <label
-                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="예산 편성 및 항목 설정"
-                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">예산 편성 및 항목
-                                        설정</span>
+                                    class="flex items-center gap-3 p-3 border border-slate-800 rounded-xl hover:bg-slate-800/50 cursor-pointer bg-slate-900/30">
+                                    <input type="checkbox" name="difficulty" value="예산 편성"
+                                        class="rounded text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-xs text-slate-300">예산 편성</span>
                                 </label>
                                 <label
-                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="세부 추진 일정 및 스케줄링"
-                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">세부 추진 일정 및
-                                        스케줄링</span>
+                                    class="flex items-center gap-3 p-3 border border-slate-800 rounded-xl hover:bg-slate-800/50 cursor-pointer bg-slate-900/30">
+                                    <input type="checkbox" name="difficulty" value="스케줄링"
+                                        class="rounded text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-xs text-slate-300">세부 일정 수립</span>
                                 </label>
                                 <label
-                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="시각 자료 준비"
-                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">시각 자료(이미지,
-                                        도표) 준비</span>
+                                    class="flex items-center gap-3 p-3 border border-slate-800 rounded-xl hover:bg-slate-800/50 cursor-pointer bg-slate-900/30">
+                                    <input type="checkbox" name="difficulty" value="시각 자료"
+                                        class="rounded text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-xs text-slate-300">시각 자료 준비</span>
                                 </label>
                             </div>
                         </div>
@@ -453,65 +576,67 @@
 
                     <!-- 4. 워크숍 기대 사항 -->
                     <div class="space-y-6">
-                        <h3 class="font-bold text-stone-800 border-l-4 border-orange-500 pl-3">4. 워크숍 기대 사항</h3>
+                        <h3 class="font-bold text-slate-200 border-l-4 border-violet-500 pl-3">4. 워크숍 기대 사항</h3>
                         <div class="space-y-2">
-                            <label class="text-sm font-medium text-stone-700">이번 4주 과정을 통해 가장 얻고 싶은 결과물은 무엇인가요?</label>
+                            <label class="text-sm font-medium text-slate-400">얻고 싶은 결과물</label>
                             <textarea name="expectations" required
-                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24"></textarea>
+                                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600 h-24 custom-scroll"></textarea>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-sm font-medium text-stone-700">수업 중 AI에게 꼭 물어보고 싶은 질문이 있다면?</label>
+                            <label class="text-sm font-medium text-slate-400">AI에게 묻고 싶은 질문</label>
                             <input type="text" name="ai_question"
-                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50">
+                                class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white focus:ring-2 focus:ring-violet-500 focus:outline-none placeholder-slate-600">
                         </div>
                     </div>
 
                     <!-- 5. 장비 준비 -->
                     <div class="space-y-6">
-                        <h3 class="font-bold text-stone-800 border-l-4 border-orange-500 pl-3">5. 장비 준비 안내</h3>
+                        <h3 class="font-bold text-slate-200 border-l-4 border-violet-500 pl-3">5. 장비 준비</h3>
                         <div class="space-y-4">
-                            <p class="text-sm font-medium text-stone-700">본 워크숍은 실습 위주로 진행됩니다. 개인 노트북 또는 태블릿 지참이 가능하신가요?
-                            </p>
+                            <p class="text-sm font-medium text-slate-400">개인 노트북/태블릿 지참 가능 여부</p>
                             <div class="flex gap-6">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="equipment" value="예" required class="text-orange-600">
-                                    <span class="text-sm">예</span>
+                                    <input type="radio" name="equipment" value="예" required
+                                        class="text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-sm text-slate-300">예</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="equipment" value="아니오" class="text-orange-600"> <span
-                                        class="text-sm">아니오</span>
+                                    <input type="radio" name="equipment" value="아니오"
+                                        class="text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                                    <span class="text-sm text-slate-300">아니오</span>
                                 </label>
                             </div>
                         </div>
                     </div>
 
                     <!-- 보증금 안내 -->
-                    <div class="p-5 bg-amber-50 rounded-2xl border border-amber-200 mb-6">
-                        <p class="text-sm text-amber-800 leading-relaxed">
-                            💡 중도 이탈 방지를 위해 <strong>보증금 5만원</strong>을 받으며(참여자 선정 후 입금), <strong>4회 모두 참여 후 전액
-                                환불</strong>해 드립니다.
+                    <div class="p-5 bg-violet-900/20 rounded-2xl border border-violet-500/30 mb-6">
+                        <p class="text-sm text-violet-300 leading-relaxed font-light">
+                            💡 책임감 있는 참여를 위해 <strong>보증금 5만원</strong>이 있습니다. (4회 모두 참석 시 <strong class="text-white">100%
+                                환불</strong>)
                         </p>
                     </div>
 
                     <!-- 동의 사항 -->
-                    <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100">
-                        <p class="text-[10px] text-stone-400 mb-4">[개인정보 수집 및 이용 동의] 수집된 정보는 워크숍 운영 및 안내 목적으로만 사용됩니다.
-                        </p>
+                    <div class="p-6 bg-slate-900/50 rounded-2xl border border-slate-800">
+                        <p class="text-[10px] text-slate-500 mb-4">[개인정보 수집 및 이용 동의] 수집된 정보는 운영 목적 외 사용되지 않습니다.</p>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" required class="rounded text-orange-600"> <span
-                                class="text-sm font-bold">동의함</span>
+                            <input type="checkbox" required
+                                class="rounded text-violet-600 bg-slate-700 border-slate-600 focus:ring-violet-500">
+                            <span class="text-sm font-bold text-slate-300">동의합니다</span>
                         </label>
                     </div>
 
                     <button type="submit"
-                        class="w-full py-5 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition shadow-xl text-lg mb-8">워크숍
-                        신청서 제출하기</button>
+                        class="w-full py-5 bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white font-bold rounded-2xl hover:scale-[1.02] transition shadow-2xl text-lg mb-8 border border-white/10">
+                        신청서 제출하기
+                    </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <footer class="py-12 text-center text-stone-400 text-sm border-t border-stone-200 bg-white">
+    <footer class="py-12 text-center text-slate-600 text-sm border-t border-white/5 bg-slate-950 relative z-10">
         <p class="mb-2">© 2025 AI Arts Masterclass. All rights reserved.</p>
         <p>Instructor: JENNY | Built for Artist Max</p>
     </footer>
@@ -597,35 +722,35 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
                     <div class="space-y-8 text-center lg:text-left">
                         <div class="flex flex-col lg:flex-row items-center gap-5">
-                            <div class="w-20 h-20 rounded-[2rem] bg-orange-100 flex items-center justify-center text-4xl shadow-inner">${data.icon}</div>
+                            <div class="w-20 h-20 rounded-[2rem] bg-slate-800 flex items-center justify-center text-4xl shadow-[0_0_20px_rgba(0,0,0,0.3)] border border-white/5">${data.icon}</div>
                             <div>
-                                <span class="text-orange-600 font-bold text-xs uppercase tracking-widest">Week 0${num}</span>
-                                <h3 class="text-2xl lg:text-3xl font-bold text-stone-900">${data.title}</h3>
+                                <span class="text-violet-500 font-bold text-xs uppercase tracking-widest">Week 0${num}</span>
+                                <h3 class="text-2xl lg:text-3xl font-bold text-white">${data.title}</h3>
                             </div>
                         </div>
-                        <p class="text-base lg:text-lg text-stone-600 leading-relaxed">${data.desc}</p>
-                        <div class="p-6 bg-stone-50 rounded-3xl border border-stone-100">
-                            <h4 class="font-bold text-xs text-stone-400 uppercase mb-3">핵심 목표</h4>
-                            <p class="text-stone-800 font-medium">"${data.goal}"</p>
+                        <p class="text-base lg:text-lg text-slate-400 leading-relaxed">${data.desc}</p>
+                        <div class="p-6 bg-slate-900/40 rounded-3xl border border-white/5 backdrop-blur-sm">
+                            <h4 class="font-bold text-xs text-slate-500 uppercase mb-3">핵심 목표</h4>
+                            <p class="text-slate-200 font-medium">"${data.goal}"</p>
                         </div>
                         <div class="pt-4">
-                            <h4 class="font-bold text-orange-600 text-xs mb-3 uppercase tracking-widest">Weekly Mission</h4>
-                            <div class="flex items-center justify-center lg:justify-start gap-3 text-stone-800 p-4 bg-white rounded-2xl border border-stone-200 shadow-sm">
+                            <h4 class="font-bold text-cyan-500 text-xs mb-3 uppercase tracking-widest">Weekly Mission</h4>
+                            <div class="flex items-center justify-center lg:justify-start gap-3 text-slate-200 p-4 bg-slate-800/80 rounded-2xl border border-slate-700/50 shadow-sm">
                                 <span class="text-2xl">✅</span>
-                                <span class="font-bold">${data.mission}</span>
+                                <span class="font-bold text-white">${data.mission}</span>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-stone-50 p-8 md:p-10 rounded-[2.5rem] border border-stone-100 shadow-inner">
-                        <h4 class="font-bold text-stone-800 mb-8 flex items-center gap-3 text-lg">
-                            <span class="w-3 h-3 bg-orange-500 rounded-full"></span>
+                    <div class="bg-slate-900/50 p-8 md:p-10 rounded-[2.5rem] border border-white/5 shadow-inner">
+                        <h4 class="font-bold text-slate-200 mb-8 flex items-center gap-3 text-lg">
+                            <span class="w-3 h-3 bg-violet-500 rounded-full shadow-[0_0_10px_rgba(139,92,246,0.5)]"></span>
                             상세 타임라인 (120분)
                         </h4>
                         <div class="space-y-6 custom-scroll overflow-y-auto max-h-[350px] pr-4">
                             ${data.timeline.map(t => `
-                                <div class="flex gap-5 items-start">
-                                    <span class="text-xs font-bold text-orange-400 mt-1.5 whitespace-nowrap bg-white px-2 py-1 rounded-md border border-stone-200">${t.time}</span>
-                                    <span class="text-stone-600 leading-relaxed">${t.task}</span>
+                                <div class="flex gap-5 items-start group">
+                                    <span class="text-xs font-bold text-slate-950 mt-1.5 whitespace-nowrap bg-violet-200 px-2 py-1 rounded-md border border-violet-300 group-hover:bg-violet-400 transition">${t.time}</span>
+                                    <span class="text-slate-400 leading-relaxed group-hover:text-slate-200 transition">${t.task}</span>
                                 </div>
                             `).join('')}
                         </div>
@@ -650,6 +775,7 @@
                     setTimeout(type, 35);
                 } else {
                     output.classList.remove('typing-cursor');
+                    output.innerHTML += " <span class='text-violet-400 font-bold ml-2'>[번역 완료]</span>";
                 }
             };
             type();
@@ -670,8 +796,6 @@
             event.preventDefault();
             const form = document.getElementById('workshop-form');
 
-            // --- [필수 항목 명시적 검사] ---
-            // 필수 텍스트 필드 목록
             const requiredTextFields = [
                 { name: 'name', label: '성함' },
                 { name: 'phone', label: '연락처' },
@@ -679,13 +803,9 @@
                 { name: 'region', label: '주요 활동 지역' },
                 { name: 'field', label: '주요 활동 예술 분야' },
                 { name: 'detail_activity', label: '세부 예술활동' },
-                { name: 'grant_exp', label: '공모사업 경험' },
-                { name: 'target_grant', label: '지원 염두 공모사업' },
-                { name: 'expectations', label: '워크숍 기대 사항' },
-                { name: 'ai_question', label: 'AI에게 묻고 싶은 질문' }
+                { name: 'expectations', label: '워크숍 기대 사항' }
             ];
 
-            // 필수 라디오 필드 목록
             const requiredRadioFields = [
                 { name: 'ai_exp', label: 'AI 활용 경험' },
                 { name: 'google_use', label: '구글 계정 사용 여부' },
@@ -695,7 +815,6 @@
             let invalidElement = null;
             let invalidMessage = "";
 
-            // 1. 텍스트/textarea 필드 검사
             for (const field of requiredTextFields) {
                 const el = form.querySelector(`[name="${field.name}"]`);
                 if (el && !el.value.trim()) {
@@ -705,7 +824,6 @@
                 }
             }
 
-            // 2. 라디오 버튼 필드 검사
             if (!invalidElement) {
                 for (const field of requiredRadioFields) {
                     const checked = form.querySelector(`input[name="${field.name}"]:checked`);
@@ -721,12 +839,15 @@
             if (!invalidElement) {
                 const difficultyChecked = form.querySelectorAll('input[name="difficulty"]:checked');
                 if (difficultyChecked.length === 0) {
-                    invalidElement = form.querySelector('input[name="difficulty"]');
+                    // Try to scroll to the checkboxes
+                    const checkboxes = form.querySelectorAll('input[name="difficulty"]');
+                    if (checkboxes.length > 0) {
+                        invalidElement = checkboxes[0];
+                    }
                     invalidMessage = "'가장 어려운 부분'을 최소 1개 선택해 주세요.";
                 }
             }
 
-            // 4. 개인정보 동의 체크박스 검사
             if (!invalidElement) {
                 const agreeCheckbox = form.querySelector('input[type="checkbox"][required]');
                 if (agreeCheckbox && !agreeCheckbox.checked) {
@@ -735,20 +856,14 @@
                 }
             }
 
-            // --- [검사 결과 처리] ---
             if (invalidElement) {
-                alert(invalidMessage + "\n\n모든 항목을 빠짐없이 확인해 주세요.");
-
+                alert(invalidMessage);
                 const targetScroll = invalidElement.type === 'radio' || invalidElement.type === 'checkbox'
                     ? invalidElement.closest('div') || invalidElement.parentElement
                     : invalidElement;
-
                 targetScroll.scrollIntoView({ behavior: "smooth", block: "center" });
-                setTimeout(() => invalidElement.focus(), 500);
-                return; // 전송 중단!
+                return;
             }
-
-            // --- [전송 로직 (모든 검사 통과)] ---
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerText;
@@ -756,8 +871,6 @@
             submitBtn.disabled = true;
 
             const formData = new FormData(form);
-
-            // 체크박스 값 처리 (difficulty)
             const difficulties = formData.getAll('difficulty').join(', ');
             formData.delete('difficulty');
             formData.append('difficulty', difficulties);
@@ -770,16 +883,16 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        alert("워크숍 신청이 성공적으로 접수되었습니다! \n담당자가 확인 후 연락드리겠습니다.");
+                        alert("워크숍 신청이 성공적으로 접수되었습니다! 담당자가 확인 후 연락드리겠습니다.");
                         form.reset();
                         closeModal();
                     } else {
-                        alert("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+                        alert("접수 중 오류가 발생했습니다.");
                     }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert("서버 연결에 실패했습니다. 인터넷 연결을 확인해주세요.");
+                    alert("서버 연결 실패.");
                 })
                 .finally(() => {
                     submitBtn.innerText = originalBtnText;
@@ -787,12 +900,14 @@
                 });
         }
 
-        // --- 초기화 ---
         window.onload = () => {
             changeWeek(1);
 
             const canvas = document.getElementById('workshopChart');
             if (canvas) {
+                Chart.defaults.color = '#94a3b8';
+                Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
                 const ctx = canvas.getContext('2d');
                 new Chart(ctx, {
                     type: 'doughnut',
@@ -800,9 +915,14 @@
                         labels: ['실현가능성(30)', '작품의 우수성(30)', '사업수행역량(20)', '기여도(10)', '예산 적정성(10)'],
                         datasets: [{
                             data: [30, 30, 20, 10, 10],
-                            backgroundColor: ['#f97316', '#10b981', '#fb923c', '#d6d3d1', '#e7e5e4'],
-                            borderWidth: 0,
-                            hoverOffset: 15
+                            backgroundColor: [
+                                '#8b5cf6', // Violet
+                                '#a78bfa', // Lighter Violet
+                                '#c084fc', // Fuchsia
+                                '#e879f9', // Pink
+                                '#f472b6' // Rose
+                            ],
+                            borderWidth: 0
                         }]
                     },
                     options: {
@@ -812,25 +932,17 @@
                             legend: {
                                 position: 'bottom',
                                 labels: {
-                                    font: { family: 'Noto Sans KR', size: 11 },
                                     padding: 20,
-                                    usePointStyle: true
+                                    usePointStyle: true,
+                                    font: { size: 11 }
                                 }
-                            },
-                            tooltip: {
-                                backgroundColor: '#1c1917',
-                                padding: 12,
-                                cornerRadius: 12
                             }
-                        },
-                        cutout: '75%'
+                        }
                     }
                 });
             }
         };
     </script>
-
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </body>
 
 </html>
