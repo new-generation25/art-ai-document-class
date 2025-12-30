@@ -259,10 +259,10 @@
                         * 주요 재단 및 진흥원의 평균적인 심사 기준을 바탕으로 구성되었습니다.
                     </p>
                 </div>
-                <div class="space-y-8">
+                <div class="space-y-8 text-center md:text-left">
                     <div>
                         <span class="text-orange-600 font-bold text-sm uppercase">Selection Strategy</span>
-                        <h2 class="text-4xl font-bold text-stone-900 mt-2 mb-6">심사위원의 <br>마음을 여는 전략</h2>
+                        <h2 class="text-3xl md:text-4xl font-bold text-stone-900 mt-2 mb-6">심사위원의 <br>마음을 여는 전략</h2>
                         <p class="text-stone-600 leading-relaxed">
                             우수한 예술성(30%)도 중요하지만, 합격의 당락은 <strong>실현가능성(30%)</strong>과 <strong>사업수행역량(20%)</strong>에서
                             결정됩니다.
@@ -594,22 +594,22 @@
 
             contentArea.innerHTML = `
                 <div class="grid lg:grid-cols-2 gap-12 items-start">
-                    <div class="space-y-8">
-                        <div class="flex items-center gap-5">
+                    <div class="space-y-8 text-center lg:text-left">
+                        <div class="flex flex-col lg:flex-row items-center gap-5">
                             <div class="w-20 h-20 rounded-[2rem] bg-orange-100 flex items-center justify-center text-4xl shadow-inner">${data.icon}</div>
                             <div>
                                 <span class="text-orange-600 font-bold text-xs uppercase tracking-widest">Week 0${num}</span>
-                                <h3 class="text-3xl font-bold text-stone-900">${data.title}</h3>
+                                <h3 class="text-2xl lg:text-3xl font-bold text-stone-900">${data.title}</h3>
                             </div>
                         </div>
-                        <p class="text-lg text-stone-600 leading-relaxed">${data.desc}</p>
+                        <p class="text-base lg:text-lg text-stone-600 leading-relaxed">${data.desc}</p>
                         <div class="p-6 bg-stone-50 rounded-3xl border border-stone-100">
                             <h4 class="font-bold text-xs text-stone-400 uppercase mb-3">핵심 목표</h4>
                             <p class="text-stone-800 font-medium">"${data.goal}"</p>
                         </div>
                         <div class="pt-4">
                             <h4 class="font-bold text-orange-600 text-xs mb-3 uppercase tracking-widest">Weekly Mission</h4>
-                            <div class="flex items-center gap-3 text-stone-800 p-4 bg-white rounded-2xl border border-stone-200 shadow-sm">
+                            <div class="flex items-center justify-center lg:justify-start gap-3 text-stone-800 p-4 bg-white rounded-2xl border border-stone-200 shadow-sm">
                                 <span class="text-2xl">✅</span>
                                 <span class="font-bold">${data.mission}</span>
                             </div>
