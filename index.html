@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>예술가 x AI 공모사업 마스터 클래스</title>
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Google Fonts: Noto Sans KR -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
 
     <style>
         body {
@@ -21,7 +23,7 @@
             color: #1c1917;
             scroll-behavior: smooth;
         }
-        
+
         .chart-container {
             position: relative;
             width: 100%;
@@ -33,20 +35,30 @@
         .custom-scroll::-webkit-scrollbar {
             width: 4px;
         }
+
         .custom-scroll::-webkit-scrollbar-track {
-            background: #f5f5f4; 
+            background: #f5f5f4;
         }
+
         .custom-scroll::-webkit-scrollbar-thumb {
-            background-color: #d6d3d1; 
+            background-color: #d6d3d1;
             border-radius: 10px;
         }
 
         .fade-in {
             animation: fadeIn 0.5s ease-out;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .active-tab {
@@ -60,18 +72,25 @@
             content: '|';
             animation: blink 1s step-start infinite;
         }
-        @keyframes blink { 50% { opacity: 0; } }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
 
         /* Modal Styles */
         #apply-modal {
             display: none;
             z-index: 1000;
         }
+
         #apply-modal.active {
             display: flex;
         }
     </style>
 </head>
+
 <body class="antialiased">
 
     <!-- Navigation -->
@@ -85,7 +104,8 @@
                 <a href="#curriculum" class="hover:text-orange-600 transition">커리큘럼</a>
                 <a href="#translator" class="hover:text-orange-600 transition">AI 번역 체험</a>
                 <a href="#analytics" class="hover:text-orange-600 transition">심사 전략</a>
-                <button onclick="openModal()" class="px-5 py-2 bg-stone-900 text-white rounded-full hover:bg-orange-600 transition">신청하기</button>
+                <button onclick="openModal()"
+                    class="px-5 py-2 bg-stone-900 text-white rounded-full hover:bg-orange-600 transition">신청하기</button>
             </div>
         </div>
     </nav>
@@ -93,7 +113,9 @@
     <!-- Hero Section -->
     <header class="relative pt-32 pb-24 overflow-hidden">
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <span class="inline-block px-4 py-1.5 mb-6 text-[10px] font-bold tracking-widest text-orange-600 bg-orange-50 rounded-full border border-orange-100 uppercase">예술인을 위한 AI 마스터 클래스</span>
+            <span
+                class="inline-block px-4 py-1.5 mb-6 text-[10px] font-bold tracking-widest text-orange-600 bg-orange-50 rounded-full border border-orange-100 uppercase">예술인을
+                위한 AI 마스터 클래스</span>
             <h1 class="text-5xl md:text-7xl font-bold text-stone-900 mb-8 leading-tight">
                 추상적인 영감을<br>
                 <span class="text-orange-600">필승의 제안서</span>로 바꾸다
@@ -103,8 +125,12 @@
                 이제 행정 서류의 공포에서 벗어나 창작에만 집중하세요.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#curriculum" class="px-10 py-4 bg-stone-900 text-white font-bold rounded-2xl hover:bg-stone-800 transition shadow-lg">커리큘럼 보기</a>
-                <button onclick="openModal()" class="px-10 py-4 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition shadow-lg">🚀 워크숍 신청하기</button>
+                <a href="#curriculum"
+                    class="px-10 py-4 bg-stone-900 text-white font-bold rounded-2xl hover:bg-stone-800 transition shadow-lg">커리큘럼
+                    보기</a>
+                <button onclick="openModal()"
+                    class="px-10 py-4 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition shadow-lg">🚀
+                    워크숍 신청하기</button>
             </div>
         </div>
     </header>
@@ -116,17 +142,20 @@
                 <div class="p-8 bg-white rounded-3xl border border-stone-100 shadow-sm">
                     <div class="text-3xl mb-4">🧠</div>
                     <h3 class="text-lg font-bold mb-3">압도적 맥락 파악</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed">200만 토큰의 긴 문맥 이해력으로 복잡한 공고문과 작가님의 포트폴리오를 한 번에 분석합니다.</p>
+                    <p class="text-stone-500 text-sm leading-relaxed">200만 토큰의 긴 문맥 이해력으로 복잡한 공고문과 작가님의 포트폴리오를 한 번에
+                        분석합니다.</p>
                 </div>
                 <div class="p-8 bg-white rounded-3xl border border-stone-100 shadow-sm">
                     <div class="text-3xl mb-4">🌐</div>
                     <h3 class="text-lg font-bold mb-3">실시간 정보 검색</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed">최신 문화예술 트렌드와 지역 정책 데이터를 실시간으로 찾아 기획서의 논리적 근거를 강화합니다.</p>
+                    <p class="text-stone-500 text-sm leading-relaxed">최신 문화예술 트렌드와 지역 정책 데이터를 실시간으로 찾아 기획서의 논리적 근거를
+                        강화합니다.</p>
                 </div>
                 <div class="p-8 bg-white rounded-3xl border border-stone-100 shadow-sm">
                     <div class="text-3xl mb-4">🎭</div>
                     <h3 class="text-lg font-bold mb-3">예술가형 행정 언어</h3>
-                    <p class="text-stone-500 text-sm leading-relaxed">단순한 수정을 넘어 예술적 고유성을 유지하면서 설득력 있는 행정 용어로 완벽하게 번역합니다.</p>
+                    <p class="text-stone-500 text-sm leading-relaxed">단순한 수정을 넘어 예술적 고유성을 유지하면서 설득력 있는 행정 용어로 완벽하게
+                        번역합니다.</p>
                 </div>
             </div>
         </div>
@@ -142,10 +171,14 @@
 
             <!-- Tab Navigation -->
             <div class="flex flex-wrap justify-center gap-2 mb-12 p-2 bg-stone-100 rounded-3xl max-w-2xl mx-auto">
-                <button onclick="changeWeek(1)" id="tab-1" class="week-tab active-tab px-6 py-3 rounded-2xl text-sm font-bold transition">1주차: 기초</button>
-                <button onclick="changeWeek(2)" id="tab-2" class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">2주차: 논리</button>
-                <button onclick="changeWeek(3)" id="tab-3" class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">3주차: 상세</button>
-                <button onclick="changeWeek(4)" id="tab-4" class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">4주차: 검토</button>
+                <button onclick="changeWeek(1)" id="tab-1"
+                    class="week-tab active-tab px-6 py-3 rounded-2xl text-sm font-bold transition">1주차: 기초</button>
+                <button onclick="changeWeek(2)" id="tab-2"
+                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">2주차: 논리</button>
+                <button onclick="changeWeek(3)" id="tab-3"
+                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">3주차: 상세</button>
+                <button onclick="changeWeek(4)" id="tab-4"
+                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">4주차: 검토</button>
             </div>
 
             <!-- Content Area -->
@@ -167,8 +200,10 @@
             <div class="bg-stone-800 rounded-3xl p-8 border border-stone-700 shadow-2xl">
                 <div class="grid md:grid-cols-[1fr,auto,1fr] gap-8 items-center">
                     <div class="space-y-4">
-                        <label class="text-xs font-bold text-stone-500 uppercase tracking-widest">Artist Mind (나의 아이디어)</label>
-                        <select id="artist-select" class="w-full bg-stone-900 border border-stone-700 rounded-2xl px-5 py-4 text-stone-200 focus:outline-none focus:border-orange-500 appearance-none cursor-pointer">
+                        <label class="text-xs font-bold text-stone-500 uppercase tracking-widest">Artist Mind (나의
+                            아이디어)</label>
+                        <select id="artist-select"
+                            class="w-full bg-stone-900 border border-stone-700 rounded-2xl px-5 py-4 text-stone-200 focus:outline-none focus:border-orange-500 appearance-none cursor-pointer">
                             <option value="0">"할머니의 옛날 이야기를 그림으로 남기고 싶어요."</option>
                             <option value="1">"요즘 사람들이 예술을 너무 몰라요."</option>
                             <option value="2">"동네 오래된 시장이 사라지는 게 슬퍼요."</option>
@@ -178,15 +213,19 @@
                     </div>
 
                     <div class="flex justify-center">
-                        <button onclick="runTranslation()" class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center hover:bg-orange-500 transition shadow-lg group">
+                        <button onclick="runTranslation()"
+                            class="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center hover:bg-orange-500 transition shadow-lg group">
                             <span class="text-2xl group-hover:scale-125 transition">⚡</span>
                         </button>
                     </div>
 
                     <div class="space-y-4">
-                        <label class="text-xs font-bold text-orange-500 uppercase tracking-widest">Admin Logic (공모전 언어)</label>
-                        <div class="bg-stone-900/50 border border-stone-700 rounded-2xl px-5 py-4 min-h-[120px] flex items-center">
-                            <p id="translation-result" class="text-stone-300 font-medium leading-relaxed">예시를 선택하고 번역 버튼을 눌러보세요.</p>
+                        <label class="text-xs font-bold text-orange-500 uppercase tracking-widest">Admin Logic (공모전
+                            언어)</label>
+                        <div
+                            class="bg-stone-900/50 border border-stone-700 rounded-2xl px-5 py-4 min-h-[120px] flex items-center">
+                            <p id="translation-result" class="text-stone-300 font-medium leading-relaxed">예시를 선택하고 번역
+                                버튼을 눌러보세요.</p>
                         </div>
                     </div>
                 </div>
@@ -213,7 +252,8 @@
                         <span class="text-orange-600 font-bold text-sm uppercase">Selection Strategy</span>
                         <h2 class="text-4xl font-bold text-stone-900 mt-2 mb-6">심사위원의 <br>마음을 여는 전략</h2>
                         <p class="text-stone-600 leading-relaxed">
-                            우수한 예술성(30%)도 중요하지만, 합격의 당락은 <strong>실현가능성(30%)</strong>과 <strong>사업수행역량(20%)</strong>에서 결정됩니다. 
+                            우수한 예술성(30%)도 중요하지만, 합격의 당락은 <strong>실현가능성(30%)</strong>과 <strong>사업수행역량(20%)</strong>에서
+                            결정됩니다.
                             워크숍에서는 AI를 활용해 이 50%의 점수를 완벽하게 확보하는 법을 배웁니다.
                         </p>
                     </div>
@@ -235,20 +275,24 @@
     <!-- Footer Area CTA -->
     <section class="py-20 bg-stone-100 text-center">
         <h2 class="text-3xl font-bold mb-6">선정 확률을 높일 준비가 되셨나요?</h2>
-        <button onclick="openModal()" class="px-12 py-5 bg-stone-900 text-white font-bold rounded-2xl hover:bg-orange-600 transition shadow-xl text-lg">지금 바로 워크숍 신청하기</button>
+        <button onclick="openModal()"
+            class="px-12 py-5 bg-stone-900 text-white font-bold rounded-2xl hover:bg-orange-600 transition shadow-xl text-lg">지금
+            바로 워크숍 신청하기</button>
     </section>
 
     <!-- Modal Form -->
     <div id="apply-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col fade-in">
+        <div
+            class="bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col fade-in">
             <div class="bg-stone-900 p-6 flex justify-between items-center text-white shrink-0">
                 <h2 class="text-xl font-bold">공모사업 선정 확률을 높이는 AI활용 워크숍 신청서</h2>
-                <button onclick="closeModal()" class="text-3xl leading-none hover:text-orange-500 transition">&times;</button>
+                <button onclick="closeModal()"
+                    class="text-3xl leading-none hover:text-orange-500 transition">&times;</button>
             </div>
-            
+
             <div class="p-8 overflow-y-auto custom-scroll">
                 <p class="text-stone-500 mb-8 font-medium">"당신의 예술 철학, 이제 공모전의 언어로 꽃피우세요."</p>
-                
+
                 <form id="workshop-form" class="space-y-10" onsubmit="handleFormSubmit(event)">
                     <!-- 1. 기본 정보 -->
                     <div class="space-y-6">
@@ -256,30 +300,42 @@
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-stone-400 uppercase">성함</label>
-                                <input type="text" name="name" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50" placeholder="홍길동">
+                                <input type="text" name="name" required
+                                    class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                    placeholder="홍길동">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-stone-400 uppercase">연락처</label>
-                                <input type="tel" name="phone" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50" placeholder="010-0000-0000">
+                                <input type="tel" name="phone" required
+                                    class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                    placeholder="010-0000-0000">
                             </div>
                         </div>
                         <div class="space-y-2">
                             <label class="text-xs font-bold text-stone-400 uppercase">이메일 (구글계정)</label>
-                            <input type="email" name="email" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50" placeholder="example@gmail.com">
+                            <input type="email" name="email" required
+                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                placeholder="example@gmail.com">
                         </div>
                         <div class="grid md:grid-cols-2 gap-4">
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-stone-400 uppercase">주요 활동 지역</label>
-                                <input type="text" name="region" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50" placeholder="예: 김해시, 경남 전역 등">
+                                <input type="text" name="region" required
+                                    class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                    placeholder="예: 김해시, 경남 전역 등">
                             </div>
                             <div class="space-y-2">
                                 <label class="text-xs font-bold text-stone-400 uppercase">주요 활동 예술 분야</label>
-                                <input type="text" name="field" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50" placeholder="예: 연극, 서양화 등">
+                                <input type="text" name="field" required
+                                    class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                    placeholder="예: 연극, 서양화 등">
                             </div>
                         </div>
                         <div class="space-y-2">
                             <label class="text-xs font-bold text-stone-400 uppercase">세부 예술활동</label>
-                            <textarea name="detail_activity" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24" placeholder="진행 중이신 주요 활동이나 최근 프로젝트를 간단히 적어주세요."></textarea>
+                            <textarea name="detail_activity" required
+                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24"
+                                placeholder="진행 중이신 주요 활동이나 최근 프로젝트를 간단히 적어주세요."></textarea>
                         </div>
                     </div>
 
@@ -289,14 +345,21 @@
                         <div class="space-y-4">
                             <p class="text-sm font-medium text-stone-700">생성형 AI(ChatGPT, 제미나이 등)를 사용해 본 적이 있나요?</p>
                             <div class="flex flex-col gap-2">
-                                <label class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="radio" name="ai_exp" value="전혀 없다" required class="text-orange-600"> <span class="text-sm text-stone-600">전혀 없다</span>
+                                <label
+                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    <input type="radio" name="ai_exp" value="전혀 없다" required class="text-orange-600">
+                                    <span class="text-sm text-stone-600">전혀 없다</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="radio" name="ai_exp" value="가끔 대화해 본 적은 있다" class="text-orange-600"> <span class="text-sm text-stone-600">가끔 대화해 본 적은 있다</span>
+                                <label
+                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    <input type="radio" name="ai_exp" value="가끔 대화해 본 적은 있다" class="text-orange-600">
+                                    <span class="text-sm text-stone-600">가끔 대화해 본 적은 있다</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="radio" name="ai_exp" value="실제 작업이나 업무에 활용하고 있다" class="text-orange-600"> <span class="text-sm text-stone-600">실제 작업이나 업무에 활용하고 있다</span>
+                                <label
+                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    <input type="radio" name="ai_exp" value="실제 작업이나 업무에 활용하고 있다"
+                                        class="text-orange-600"> <span class="text-sm text-stone-600">실제 작업이나 업무에 활용하고
+                                        있다</span>
                                 </label>
                             </div>
                         </div>
@@ -304,10 +367,12 @@
                             <p class="text-sm font-medium text-stone-700">구글 계정을 가지고 있으며, 평소 원활하게 사용하시나요?</p>
                             <div class="flex gap-6">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="google_use" value="예" required class="text-orange-600"> <span class="text-sm">예</span>
+                                    <input type="radio" name="google_use" value="예" required class="text-orange-600">
+                                    <span class="text-sm">예</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="google_use" value="아니오" class="text-orange-600"> <span class="text-sm">아니오</span>
+                                    <input type="radio" name="google_use" value="아니오" class="text-orange-600"> <span
+                                        class="text-sm">아니오</span>
                                 </label>
                             </div>
                         </div>
@@ -317,30 +382,50 @@
                     <div class="space-y-6">
                         <h3 class="font-bold text-stone-800 border-l-4 border-orange-500 pl-3">3. 공모사업 도전 경험</h3>
                         <div class="space-y-2">
-                            <label class="text-sm font-medium text-stone-700">최근 2년 내 공모사업에 신청을 했거나 선정되어 운영한 경험이 있나요?</label>
-                            <textarea name="grant_exp" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24" placeholder="예: 2025년 지역문화예술육성지원사업 300만원 / 선정, 2024 김해시 예술 지원사업 200만원 비선정"></textarea>
+                            <label class="text-sm font-medium text-stone-700">최근 2년 내 공모사업에 신청을 했거나 선정되어 운영한 경험이
+                                있나요?</label>
+                            <textarea name="grant_exp"
+                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24"
+                                placeholder="예: 2025년 지역문화예술육성지원사업 300만원 / 선정, 2024 김해시 예술 지원사업 200만원 비선정"></textarea>
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-stone-700">현재 지원을 염두에 두고 있는 특정 공모사업이 있나요?</label>
-                            <input type="text" name="target_grant" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50" placeholder="사업명과 최대지원 예산을 작성해주세요.">
+                            <input type="text" name="target_grant"
+                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50"
+                                placeholder="사업명과 최대지원 예산을 작성해주세요.">
                         </div>
                         <div class="space-y-4">
                             <p class="text-sm font-medium text-stone-700">공모사업 계획서 작성 시 가장 어렵게 느껴지는 부분은? (중복 선택)</p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                <label class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="사업의 목적 및 필요성 논리 세우기" class="rounded text-orange-600"> <span class="text-xs text-stone-600">사업의 목적 및 필요성 논리 세우기</span>
+                                <label
+                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    <input type="checkbox" name="difficulty" value="사업의 목적 및 필요성 논리 세우기"
+                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">사업의 목적 및
+                                        필요성 논리 세우기</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="행정 용어로 문장 다듬기" class="rounded text-orange-600"> <span class="text-xs text-stone-600">행정 용어로 문장 다듬기</span>
+                                <label
+                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    <input type="checkbox" name="difficulty" value="행정 용어로 문장 다듬기"
+                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">행정 용어로 문장
+                                        다듬기</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="예산 편성 및 항목 설정" class="rounded text-orange-600"> <span class="text-xs text-stone-600">예산 편성 및 항목 설정</span>
+                                <label
+                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    <input type="checkbox" name="difficulty" value="예산 편성 및 항목 설정"
+                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">예산 편성 및 항목
+                                        설정</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="세부 추진 일정 및 스케줄링" class="rounded text-orange-600"> <span class="text-xs text-stone-600">세부 추진 일정 및 스케줄링</span>
+                                <label
+                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    <input type="checkbox" name="difficulty" value="세부 추진 일정 및 스케줄링"
+                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">세부 추진 일정 및
+                                        스케줄링</span>
                                 </label>
-                                <label class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
-                                    <input type="checkbox" name="difficulty" value="시각 자료 준비" class="rounded text-orange-600"> <span class="text-xs text-stone-600">시각 자료(이미지, 도표) 준비</span>
+                                <label
+                                    class="flex items-center gap-3 p-3 border border-stone-100 rounded-xl hover:bg-stone-50 cursor-pointer">
+                                    <input type="checkbox" name="difficulty" value="시각 자료 준비"
+                                        class="rounded text-orange-600"> <span class="text-xs text-stone-600">시각 자료(이미지,
+                                        도표) 준비</span>
                                 </label>
                             </div>
                         </div>
@@ -351,11 +436,13 @@
                         <h3 class="font-bold text-stone-800 border-l-4 border-orange-500 pl-3">4. 워크숍 기대 사항</h3>
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-stone-700">이번 4주 과정을 통해 가장 얻고 싶은 결과물은 무엇인가요?</label>
-                            <textarea name="expectations" required class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24"></textarea>
+                            <textarea name="expectations" required
+                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50 h-24"></textarea>
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-stone-700">수업 중 AI에게 꼭 물어보고 싶은 질문이 있다면?</label>
-                            <input type="text" name="ai_question" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50">
+                            <input type="text" name="ai_question"
+                                class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-orange-500 focus:outline-none bg-stone-50">
                         </div>
                     </div>
 
@@ -363,13 +450,16 @@
                     <div class="space-y-6">
                         <h3 class="font-bold text-stone-800 border-l-4 border-orange-500 pl-3">5. 장비 준비 안내</h3>
                         <div class="space-y-4">
-                            <p class="text-sm font-medium text-stone-700">본 워크숍은 실습 위주로 진행됩니다. 개인 노트북 또는 태블릿 지참이 가능하신가요?</p>
+                            <p class="text-sm font-medium text-stone-700">본 워크숍은 실습 위주로 진행됩니다. 개인 노트북 또는 태블릿 지참이 가능하신가요?
+                            </p>
                             <div class="flex gap-6">
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="equipment" value="예" required class="text-orange-600"> <span class="text-sm">예</span>
+                                    <input type="radio" name="equipment" value="예" required class="text-orange-600">
+                                    <span class="text-sm">예</span>
                                 </label>
                                 <label class="flex items-center gap-2 cursor-pointer">
-                                    <input type="radio" name="equipment" value="아니오" class="text-orange-600"> <span class="text-sm">아니오</span>
+                                    <input type="radio" name="equipment" value="아니오" class="text-orange-600"> <span
+                                        class="text-sm">아니오</span>
                                 </label>
                             </div>
                         </div>
@@ -377,13 +467,17 @@
 
                     <!-- 동의 사항 -->
                     <div class="p-6 bg-stone-50 rounded-2xl border border-stone-100">
-                        <p class="text-[10px] text-stone-400 mb-4">[개인정보 수집 및 이용 동의] 수집된 정보는 워크숍 운영 및 안내 목적으로만 사용됩니다.</p>
+                        <p class="text-[10px] text-stone-400 mb-4">[개인정보 수집 및 이용 동의] 수집된 정보는 워크숍 운영 및 안내 목적으로만 사용됩니다.
+                        </p>
                         <label class="flex items-center gap-2 cursor-pointer">
-                            <input type="checkbox" required class="rounded text-orange-600"> <span class="text-sm font-bold">동의함</span>
+                            <input type="checkbox" required class="rounded text-orange-600"> <span
+                                class="text-sm font-bold">동의함</span>
                         </label>
                     </div>
 
-                    <button type="submit" class="w-full py-5 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition shadow-xl text-lg mb-8">워크숍 신청서 제출하기</button>
+                    <button type="submit"
+                        class="w-full py-5 bg-orange-600 text-white font-bold rounded-2xl hover:bg-orange-700 transition shadow-xl text-lg mb-8">워크숍
+                        신청서 제출하기</button>
                 </form>
             </div>
         </div>
@@ -468,7 +562,7 @@
             const contentArea = document.getElementById('curriculum-content');
 
             contentArea.classList.remove('fade-in');
-            void contentArea.offsetWidth; 
+            void contentArea.offsetWidth;
             contentArea.classList.add('fade-in');
 
             contentArea.innerHTML = `
@@ -516,10 +610,10 @@
             const idx = document.getElementById('artist-select').value;
             const output = document.getElementById('translation-result');
             const target = translations[idx];
-            
+
             output.textContent = "";
             output.classList.add('typing-cursor');
-            
+
             let i = 0;
             const type = () => {
                 if (i < target.length) {
@@ -546,28 +640,46 @@
 
         function handleFormSubmit(event) {
             event.preventDefault();
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.innerText;
+            submitBtn.innerText = "전송 중...";
+            submitBtn.disabled = true;
+
             const form = document.getElementById('workshop-form');
             const formData = new FormData(form);
-            
-            let emailBody = "--- 워크숍 신청서 응답 ---\n\n";
-            for (let [key, value] of formData.entries()) {
-                // 체크박스 중복 항목 처리
-                if (key === 'difficulty') {
-                    const checked = Array.from(formData.getAll('difficulty')).join(', ');
-                    emailBody += `[가장 어려운 부분]: ${checked}\n`;
-                } else {
-                    emailBody += `[${key}]: ${value}\n`;
-                }
-            }
-            
-            const subject = encodeURIComponent("AI 예술 워크숍 신청서 접수");
-            const body = encodeURIComponent(emailBody);
-            
-            // mailto 링크 생성 및 실행
-            window.location.href = `mailto:socialceos@gmail.com?subject=${subject}&body=${body}`;
-            
-            alert("신청 데이터가 준비되었습니다. 메일 앱이 열리면 전송 버튼을 눌러주세요!");
-            closeModal();
+
+            // 체크박스 값 처리 (difficulty)
+            // FormData의 기본 동작은 같은 이름의 키가 여러 개 있으면 각각 전송되지만, 
+            // 구글 앱스 스크립트에서는 마지막 값만 가져오거나 배열처리가 필요할 수 있음.
+            // 여기서는 텍스트로 합쳐서 보냄.
+            const difficulties = formData.getAll('difficulty').join(', ');
+            formData.delete('difficulty');
+            formData.append('difficulty', difficulties);
+
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxLtZyIi1toB-oAJ1SWpAlqyBMWygC86cDQJGt_mP5P6y_1c5ua3WNjahbLmh8zehoJ/exec';
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert("워크숍 신청이 성공적으로 접수되었습니다! \n담당자가 확인 후 연락드리겠습니다.");
+                        form.reset();
+                        closeModal();
+                    } else {
+                        alert("접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("서버 연결에 실패했습니다. 인터넷 연결을 확인해주세요.");
+                })
+                .finally(() => {
+                    submitBtn.innerText = originalBtnText;
+                    submitBtn.disabled = false;
+                });
         }
 
         // --- 초기화 ---
@@ -612,7 +724,8 @@
             }
         };
     </script>
-    
+
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </body>
+
 </html>
