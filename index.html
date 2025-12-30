@@ -170,15 +170,26 @@
             </div>
 
             <!-- Tab Navigation -->
-            <div class="flex flex-wrap justify-center gap-2 mb-12 p-2 bg-stone-100 rounded-3xl max-w-2xl mx-auto">
+            <div class="flex justify-center mb-8">
+                <div
+                    class="inline-block px-5 py-2 bg-orange-50 text-orange-700 rounded-full font-bold text-sm border border-orange-100 shadow-sm">
+                    🗓️ 2026. 1. 6. ~ 1. 27. (매주 화) &nbsp;|&nbsp; ⏰ 10:00 ~ 12:00
+                </div>
+            </div>
+
+            <div class="flex flex-wrap justify-center gap-2 mb-12 p-2 bg-stone-100 rounded-3xl max-w-3xl mx-auto">
                 <button onclick="changeWeek(1)" id="tab-1"
-                    class="week-tab active-tab px-6 py-3 rounded-2xl text-sm font-bold transition">1주차: 기초</button>
+                    class="week-tab active-tab px-6 py-3 rounded-2xl text-sm font-bold transition text-center leading-tight">1주차
+                    (1/6)<br><span class="text-[10px] font-normal text-stone-400">오리엔테이션</span></button>
                 <button onclick="changeWeek(2)" id="tab-2"
-                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">2주차: 논리</button>
+                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition text-center leading-tight">2주차
+                    (1/13)<br><span class="text-[10px] font-normal text-stone-400">논리 구조</span></button>
                 <button onclick="changeWeek(3)" id="tab-3"
-                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">3주차: 상세</button>
+                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition text-center leading-tight">3주차
+                    (1/20)<br><span class="text-[10px] font-normal text-stone-400">상세 기획</span></button>
                 <button onclick="changeWeek(4)" id="tab-4"
-                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition">4주차: 검토</button>
+                    class="week-tab px-6 py-3 rounded-2xl text-sm font-bold transition text-center leading-tight">4주차
+                    (1/27)<br><span class="text-[10px] font-normal text-stone-400">최종 점검</span></button>
             </div>
 
             <!-- Content Area -->
@@ -276,8 +287,12 @@
     <section class="py-20 bg-stone-100 text-center">
         <h2 class="text-3xl font-bold mb-6">선정 확률을 높일 준비가 되셨나요?</h2>
         <button onclick="openModal()"
-            class="px-12 py-5 bg-stone-900 text-white font-bold rounded-2xl hover:bg-orange-600 transition shadow-xl text-lg">지금
+            class="px-12 py-5 bg-stone-900 text-white font-bold rounded-2xl hover:bg-orange-600 transition shadow-xl text-lg mb-6">지금
             바로 워크숍 신청하기</button>
+        <div class="text-sm text-stone-500 space-y-1">
+            <p>⏳ 신청접수 마감: <span class="text-orange-600 font-bold">2025. 12. 4.(일) 까지</span></p>
+            <p>* 참여자 확정 발표는 선정된 분들께 개별 안내 드립니다.</p>
+        </div>
     </section>
 
     <!-- Modal Form -->
