@@ -642,28 +642,69 @@
             event.preventDefault();
             const form = document.getElementById('workshop-form');
 
-            // --- [유효성 검사] ---
+            // --- [강력한 수동 유효성 검사] ---
+            let invalidElement = null;
+            let invalidMessage = "";
 
-            // 1. 기본 필드(텍스트, 라디오 등 required가 붙은 항목) 검사
-            if (!form.checkValidity()) {
-                alert("작성하지 않은 항목이 있습니다.\n모든 항목을 꼼꼼히 채워주세요!");
-                form.reportValidity(); // 빈칸으로 커서 이동 및 말풍선 표시
-                return;
+            // 1. 모든 required 요소 가져오기
+            const requiredElements = form.querySelectorAll('[required]');
+
+            for (const el of requiredElements) {
+                // 라디오 버튼 그룹 처리
+                if (el.type === 'radio') {
+                    const groupName = el.name;
+                    const isChecked = form.querySelector(`input[name="${groupName}"]:checked`);
+                    if (!isChecked) {
+                        invalidElement = el;
+                        invalidMessage = "선택하지 않은 항목이 있습니다.";
+                        break;
+                    }
+                }
+                // 체크박스 (단일 required인 경우 - 동의 항목)
+                else if (el.type === 'checkbox') {
+                    if (!el.checked) {
+                        invalidElement = el;
+                        invalidMessage = "동의항목을 체크해 주세요.";
+                        break;
+                    }
+                }
+                // 일반 입력 필드 (text, email, textarea 등)
+                else {
+                    if (!el.value.trim()) {
+                        invalidElement = el;
+                        // placeholder나 이전 형제 요소(label) 텍스트를 이용해 메시지 구체화 가능
+                        invalidMessage = "작성하지 않은 내용이 있습니다.";
+                        break;
+                    }
+                }
             }
 
-            // 2. 체크박스(difficulty) 그룹 검사 (최소 1개 선택)
-            const difficultyChecked = form.querySelectorAll('input[name="difficulty"]:checked');
-            if (difficultyChecked.length === 0) {
-                alert("공모사업 계획서 작성 시 '가장 어려운 부분'을\n최소 1개 이상 선택해 주세요.");
-
-                // 해당 체크박스 위치로 이동
-                const firstDiffBox = form.querySelector('input[name="difficulty"]');
-                firstDiffBox.focus();
-                firstDiffBox.closest('div.grid').scrollIntoView({ behavior: "smooth", block: "center" });
-                return;
+            // 2. 체크박스 그룹(가장 어려운 부분) 별도 검사 (required 속성이 없을 수 있음)
+            if (!invalidElement) {
+                const difficultyChecked = form.querySelectorAll('input[name="difficulty"]:checked');
+                if (difficultyChecked.length === 0) {
+                    const firstDiffBox = form.querySelector('input[name="difficulty"]');
+                    invalidElement = firstDiffBox;
+                    invalidMessage = "'가장 어려운 부분'을 최소 1개 선택해 주세요.";
+                }
             }
 
-            // --- [전송 로직] ---
+            // --- [검사 결과 처리] ---
+            if (invalidElement) {
+                alert(invalidMessage + "\n모든 항목을 빠짐없이 확인해 주세요.");
+
+                // 해당 요소가 보이는 위치로 이동 및 포커스
+                // 라디오/체크박스는 보통 label과 함께 있으므로 상위 컨테이너 기준으로 스크롤
+                const targetScroll = invalidElement.type === 'radio' || invalidElement.type === 'checkbox'
+                    ? invalidElement.closest('div') || invalidElement.parentElement
+                    : invalidElement;
+
+                targetScroll.scrollIntoView({ behavior: "smooth", block: "center" });
+                setTimeout(() => invalidElement.focus(), 500); // 스크롤 후 포커스
+                return; // 전송 중단
+            }
+
+            // --- [전송 로직 (이상 없음)] ---
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerText;
