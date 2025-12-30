@@ -640,19 +640,39 @@
 
         function handleFormSubmit(event) {
             event.preventDefault();
+            const form = document.getElementById('workshop-form');
+
+            // --- [유효성 검사] ---
+
+            // 1. 기본 필드(텍스트, 라디오 등 required가 붙은 항목) 검사
+            if (!form.checkValidity()) {
+                alert("작성하지 않은 항목이 있습니다.\n모든 항목을 꼼꼼히 채워주세요!");
+                form.reportValidity(); // 빈칸으로 커서 이동 및 말풍선 표시
+                return;
+            }
+
+            // 2. 체크박스(difficulty) 그룹 검사 (최소 1개 선택)
+            const difficultyChecked = form.querySelectorAll('input[name="difficulty"]:checked');
+            if (difficultyChecked.length === 0) {
+                alert("공모사업 계획서 작성 시 '가장 어려운 부분'을\n최소 1개 이상 선택해 주세요.");
+
+                // 해당 체크박스 위치로 이동
+                const firstDiffBox = form.querySelector('input[name="difficulty"]');
+                firstDiffBox.focus();
+                firstDiffBox.closest('div.grid').scrollIntoView({ behavior: "smooth", block: "center" });
+                return;
+            }
+
+            // --- [전송 로직] ---
 
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalBtnText = submitBtn.innerText;
             submitBtn.innerText = "전송 중...";
             submitBtn.disabled = true;
 
-            const form = document.getElementById('workshop-form');
             const formData = new FormData(form);
 
             // 체크박스 값 처리 (difficulty)
-            // FormData의 기본 동작은 같은 이름의 키가 여러 개 있으면 각각 전송되지만, 
-            // 구글 앱스 스크립트에서는 마지막 값만 가져오거나 배열처리가 필요할 수 있음.
-            // 여기서는 텍스트로 합쳐서 보냄.
             const difficulties = formData.getAll('difficulty').join(', ');
             formData.delete('difficulty');
             formData.append('difficulty', difficulties);
