@@ -1,0 +1,45 @@
+{
+    "tech_stack": [
+        "HTML5",
+        "JavaScript (Vanilla)",
+        "Tailwind CSS",
+        "Chart.js"
+    ],
+    "features": [
+        {
+            "name": "Navigation Header",
+            "description": "Sticky navigation bar with links and a modal trigger button.",
+            "files": [
+                "index.html"
+            ]
+        },
+        {
+            "name": "Curriculum Navigation",
+            "description": "Weekly curriculum details toggled via tab buttons.",
+            "files": [
+                "index.html"
+            ]
+        },
+        {
+            "name": "Interactive Translator Demo",
+            "description": "Simulated AI translation from artist language to administrative language.",
+            "files": [
+                "index.html"
+            ]
+        },
+        {
+            "name": "Workshop Application Modal",
+            "description": "Popup form to collect user details, AI experience, and expectations.",
+            "files": [
+                "index.html"
+            ]
+        },
+        {
+            "name": "Analytics Chart",
+            "description": "Data visualization of evaluation criteria using Chart.js.",
+            "files": [
+                "index.html"
+            ]
+        }
+    ]
+}

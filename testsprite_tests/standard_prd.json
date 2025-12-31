@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "project": "예술가 x AI 공모사업 선정 확률을 높이는 AI활용 워크숍",
+    "date": "2025-12-30",
+    "prepared_by": "Software Development Manager"
+  },
+  "product_overview": "본 워크숍은 예술가가 공모사업 신청서 작성에서 겪는 어려움을 해소하기 위해 AI를 적극 활용, 예술적 언어를 행정적 언어로 번역하고 실무 기획 능력을 강화하는 교육 프로그램입니다. Google Gemini 3.0 Pro AI를 도구로 사용하여 예술가의 창작 언어를 심사 기준에 맞는 논리적, 체계적 문서로 변환하고, 심사 시뮬레이션과 계획서 시각화를 지원합니다.",
+  "core_goals": [
+    "예술가의 추상적 언어를 공공기관과 심사위원의 행정적 언어로 변환",
+    "예술가와 AI간 협업을 통한 공모사업 신청서 작성 역량 강화",
+    "AI의 방대한 문맥 이해 및 실시간 정보 검색 기능 활용",
+    "선정 확률 극대화를 위한 체계적 커리큘럼 제공",
+    "사용자 친화적 UI로 교육 접근성 및 참여도 향상"
+  ],
+  "key_features": [
+    "고정형 네비게이션 바와 모달 트리거 버튼 포함 UI 설계",
+    "주차별 커리큘럼 내용 탭 버튼을 통한 상세 확인 기능",
+    "아티스트 언어를 행정 언어로 변환하는 인터랙티브 번역 데모",
+    "사용자 입력을 받는 공모사업 신청서 작성 워크숍 모달 폼",
+    "Chart.js를 이용한 평가 기준 데이터 시각화 차트 제공"
+  ],
+  "user_flow_summary": [
+    "사용자는 네비게이션 바를 통해 주차별 교육 커리큘럼 및 워크숍 소개에 접근",
+    "주차별 탭을 클릭하여 각 주의 상세 커리큘럼 내용 확인",
+    "인터랙티브 번역 데모에서 예술가의 언어를 행정 언어로 변환하는 기능 체험",
+    "모달 폼을 통해 사용자 개인 정보 및 AI 경험, 기대사항 입력 후 워크숍 신청",
+    "워크숍 신청 완료 후 차트 시각화를 통해 평가 기준과 워크숍 효과 확인"
+  ],
+  "validation_criteria": [
+    "네비게이션 바 및 탭 버튼 정상 동작 및 화면 고정 유지",
+    "인터랙티브 번역 데모가 아티스트 언어를 행정 언어로 변환하는 로직을 올바르게 시뮬레이션",
+    "모달 폼 입력 데이터가 정확히 수집되며 제출 시 올바른 동작 보장",
+    "Chart.js 차트가 정확한 데이터 기반으로 시각화되고 반응형 디자인 구현",
+    "전체 UI가 Tailwind CSS를 적용하여 일관되고 직관적인 사용자 경험 제공"
+  ],
+  "code_summary": {
+    "tech_stack": [
+      "HTML5",
+      "JavaScript (Vanilla)",
+      "Tailwind CSS",
+      "Chart.js"
+    ],
+    "features": [
+      {
+        "name": "Navigation Header",
+        "description": "Sticky navigation bar with links and a modal trigger button.",
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "name": "Curriculum Navigation",
+        "description": "Weekly curriculum details toggled via tab buttons.",
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "name": "Interactive Translator Demo",
+        "description": "Simulated AI translation from artist language to administrative language.",
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "name": "Workshop Application Modal",
+        "description": "Popup form to collect user details, AI experience, and expectations.",
+        "files": [
+          "index.html"
+        ]
+      },
+      {
+        "name": "Analytics Chart",
+        "description": "Data visualization of evaluation criteria using Chart.js.",
+        "files": [
+          "index.html"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,275 @@
+[
+  {
+    "id": "TC001",
+    "title": "Navigation Bar Sticky and Link Functionality",
+    "description": "Verify that the navigation bar remains fixed at the top of the viewport during scrolling and all navigation links route correctly to their sections.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load the workshop main page in a web browser."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the navigation bar is visible and fixed at the top on initial load."
+      },
+      {
+        "type": "action",
+        "description": "Scroll down the page."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the navigation bar remains sticky and always visible during scrolling."
+      },
+      {
+        "type": "action",
+        "description": "Click each navigation link in the bar."
+      },
+      {
+        "type": "assertion",
+        "description": "Validate that clicking each link scrolls or navigates to the corresponding section accurately."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Weekly Curriculum Tab Buttons Functionality",
+    "description": "Ensure that each weekly tab button toggles the display of detailed curriculum content correctly and visually distinguishes the selected tab.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the curriculum section in the workshop page."
+      },
+      {
+        "type": "action",
+        "description": "Click on each weekly tab button sequentially."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that only the selected week's curriculum details are displayed and other weeks' details are hidden."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the active tab button is visually highlighted according to the design."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Interactive Translation Demo Accuracy and Simulation",
+    "description": "Validate the simulated AI translation that converts artist's abstract language inputs into administrative review-oriented language accurately, reflecting expected transformations.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the interactive translation demo section."
+      },
+      {
+        "type": "action",
+        "description": "Input sample artist language text representative of abstract artistic expressions."
+      },
+      {
+        "type": "action",
+        "description": "Trigger the translation function."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the output text is a logical, structured administrative language version matching the intended transformation."
+      },
+      {
+        "type": "action",
+        "description": "Input empty or non-meaningful text and trigger translation."
+      },
+      {
+        "type": "assertion",
+        "description": "Check graceful handling with appropriate messages or fallback without errors."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Workshop Application Modal Form Input Validation and Submission",
+    "description": "Test the modal form that collects user personal information, AI experience, and expectations for correct input validations and successful submission handling.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Click the modal trigger button on the navigation bar to open the workshop application form."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the modal appears and is focused."
+      },
+      {
+        "type": "action",
+        "description": "Enter valid personal information, AI experience details, and user expectations."
+      },
+      {
+        "type": "action",
+        "description": "Submit the form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify form submission processes successfully and confirmation or success message appears."
+      },
+      {
+        "type": "action",
+        "description": "Open the modal again, enter invalid data (e.g., missing required fields, invalid formats)."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to submit the form."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that appropriate validation error messages appear and submission is blocked."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Chart.js Evaluation Criteria Data Visualization Accuracy and Responsiveness",
+    "description": "Verify that the Chart.js rendered chart accurately displays evaluation data, updates correctly if data changes, and responds well to different screen sizes.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load the evaluation criteria chart section on the page."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the chart is rendered correctly with data points matching the predefined criteria."
+      },
+      {
+        "type": "action",
+        "description": "Resize the browser window to various dimensions including mobile viewport sizes."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure the chart layout and labels adjust properly and remain fully visible and legible."
+      },
+      {
+        "type": "action",
+        "description": "Simulate data update in the chart (if supported) and render again."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the chart updates dynamically to reflect new data without visual errors."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Overall UI Consistency with Tailwind CSS Styling",
+    "description": "Confirm the entire user interface adheres uniformly to Tailwind CSS styling standards providing consistent, intuitive, and visually appealing user experience.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate through all pages and interactive elements including navigation bar, tabs, translation demo, modal forms, and charts."
+      },
+      {
+        "type": "assertion",
+        "description": "Check consistent usage of Tailwind CSS classes for spacing, typography, colors, and responsive design."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that visual components have consistent margins, padding, font sizes, and color schemes across the application."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Modal Accessibility and Keyboard Navigation",
+    "description": "Verify that the workshop application modal form supports keyboard accessibility and screen readers for inclusive user experience.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the workshop application modal using keyboard navigation (e.g., Tab and Enter keys)."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the modal gains focus and keyboard input is directed properly within the modal."
+      },
+      {
+        "type": "action",
+        "description": "Navigate through modal form fields completely using Tab and Shift+Tab keys."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify all interactive elements are reachable and usable via keyboard alone."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to close the modal using keyboard shortcuts (e.g., Escape key)."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure the modal closes correctly and focus returns to the triggering element."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Data Collection and Integrity Post Application Submission",
+    "description": "Ensure that all user input data from the workshop application modal is collected correctly and submitted data integrity is maintained.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Fill in the modal form with valid, complex inputs including special characters and long text entries."
+      },
+      {
+        "type": "action",
+        "description": "Submit the form."
+      },
+      {
+        "type": "assertion",
+        "description": "Validate that the data received on the backend or simulated backend matches exactly the user input."
+      },
+      {
+        "type": "action",
+        "description": "Check for any data loss, truncation, or corruption."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm that all fields are accurately captured and stored as expected."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Error Handling for Network or Submission Failures",
+    "description": "Verify the system behavior when form submission fails due to network issues or server errors, ensuring informative feedback is provided to the user.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate network failure or backend service unavailability during modal form submission."
+      },
+      {
+        "type": "action",
+        "description": "Submit the application form."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that a clear and user-friendly error message is displayed explaining the failure."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure the form remains open allowing the user to retry submission without data loss."
+      }
+    ]
+  }
+]

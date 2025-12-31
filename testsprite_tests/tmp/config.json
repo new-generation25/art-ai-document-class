@@ -1,0 +1,16 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "executionArgs": {
+    "projectName": "art-ai-document-class",
+    "projectPath": "e:\\developement\\art-ai-document-class",
+    "testIds": [],
+    "additionalInstruction": "전체 기능을 테스트해줘. 로컬 서버는 3000포트에서 실행 중이야. 현재 사이트 대시보드에서 상태가 업데이트되도록 요청해.",
+    "envs": {
+      "API_KEY": "sk-user-wrvWhpvz1odqRTXzphj6Xz9FIFuSn4ICYtuwmNfo1xlvKuANKpso7KedJwvu3yFkHdcGJlO05WEoinSv0bfxUWaK5ZBIFLQAcg_OzbFo_GLr21PQJsZ8SiW7CwXdRwds00M"
+    }
+  },
+  "proxy": "http://394ec47d-6a43-40cc-8857-edf050cf41ca:Ib52qoKmqGMtOvNY2B37R4llerA172v7@tun.testsprite.com:8080"
+}
